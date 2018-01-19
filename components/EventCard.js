@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
-import { Card, ListItem, Button } from 'react-native-elements';
+import { View, Text, Image, Dimensions, TouchableOpacity, Animated, PanResponder, Easing } from 'react-native';
 import NavigationButton from '../components/NavigationButton';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -20,74 +19,118 @@ export const sliderWidth = viewportWidth;
 export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
 class EventCard extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.animateFadeIn = new Animated.Value(0);
+        this.animateFadeOut = new Animated.Value(1);
+    }
+
+
+    animate() {
+        this.animateFadeIn.setValue(0);
+        this.animateFadeOut.setValue(1);
+        Animated.timing(
+            this.animateFadeIn,
+            {
+                toValue: 1,
+                duration: 500,
+                easing: Easing.linear
+            }
+        ).start();
+    }
+
+    animateOut() {
+        this.animateFadeOut.setValue(1);
+        Animated.timing(
+            this.animateFadeOut,
+            {
+                toValue: 0,
+                duration: 500,
+                easing: Easing.linear
+            }
+        ).start();
+    }
+
+    inactiveImageStyle = () => {
+        const { index, currentCard } = this.props;
+
+        this.animate();
+        this.animateOut();
+
+        const opacity = this.animateFadeIn.interpolate({
+            inputRange: [0, 0.5, 1],
+            outputRange: [0, 1, 1]
+        })
+
+        const opacityOut = this.animateFadeOut.interpolate({
+            inputRange: [0, 0.5, 1],
+            outputRange: [0, 1, 1]
+        });
+
+        if (currentCard !== index) {
+            return styles.inactiveImageStyle(0)
+        }
+        else {
+            return styles.inactiveImageStyle(opacity);
+        }
+    }
 
     render() {
-        const { ev, index, currentCard } = this.props;
-        if(currentCard === index) {
-            return (
-                <View>
-                    <TouchableOpacity
-                        activeOpacity={1}
-                        style={styles.slideInnerContainer}
+
+        const { ev, index, currentCard, inactiveOpacity, inactiveColor, color } = this.props;
+
+        return (
+            <View style={styles.slideInnerContainer}>
+                {/* <TouchableOpacity
+                    activeOpacity={1}
+                    
+                > */}
+
+                    <View>
+                        <Animated.Image
+                            source={{ uri: 'https://cloud.netlifyusercontent.com/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg' }}
+                            style={[styles.image, this.inactiveImageStyle()]}
+
+                        />
+                    </View>
+                    <Animated.View
+                        style={[styles.textContainer, this.inactiveImageStyle()]}
+
                     >
-                    
-                        <View>
-                            <Image
-                                source={{ uri: 'https://scontent-vie1-1.xx.fbcdn.net/v/t35.0-12/26827859_1820835134615540_360981581_o.png?oh=1c0de758b6fb2335811b8a8db23a6c1e&oe=5A5FFCC2' }}
-                                style={styles.image}
-                            />
-                        </View>
-                        <View style={[styles.textContainer]}>
-    
-                            <Text
-                                style={[styles.subtitle]}
-                                numberOfLines={2}
-                            >
-                                {ev.title}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-                    {/* #endregion */}
-                </View>
-            )
-        } else {
-            return (
-                <View>
-                    <TouchableOpacity
-                        activeOpacity={1}
-                        style={{
-                            width: itemWidth,
-                            height: slideHeightNonActive,
-                            paddingBottom: 18 }}
-                    >
-                    
-                        <View>
-                            <Image
-                                source={{ uri: 'https://scontent-vie1-1.xx.fbcdn.net/v/t35.0-12/26827859_1820835134615540_360981581_o.png?oh=1c0de758b6fb2335811b8a8db23a6c1e&oe=5A5FFCC2' }}
-                                style={[styles.image,{ opacity: 0, backgroundColor: '#000'}]}
-                            />
-                        </View>
-                    
-                    </TouchableOpacity>
-                    {/* #endregion */}
-                </View>
-            )
-        }
+                        <Text
+                            style={[styles.subtitle]}
+                            numberOfLines={2}
+                        >
+                            {ev.title}
+                        </Text>
+                    </Animated.View>
+                {/* </TouchableOpacity> */}
+                {/* #endregion */}
+            </View>
+        )
     }
 }
 
 
+
 const styles = {
     image: { height: 300 },
+
+    inactiveImageStyle: (animOpacity) => {
+        return {
+            opacity: animOpacity,
+        }
+    },
     slideInnerContainer: {
-        
+
         width: itemWidth,
         height: slideHeight,
         paddingBottom: 18 // needed for shadow
     },
     textContainer: {
         justifyContent: 'center',
-        paddingTop: 20 ,
+        paddingTop: 20,
         paddingBottom: 20,
         paddingHorizontal: 16,
         backgroundColor: 'white',

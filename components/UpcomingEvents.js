@@ -31,12 +31,14 @@ class UpcomingEvents extends React.Component {
 
 
     _renderItem = ({ item, index }) => {
+        const { sliderActiveSlide } = this.state;
         return (
             <EventCard
                 index={index}
-                key={index}
                 ev={item}
-                currentCard={this.state.currentCard}
+                currentCard={sliderActiveSlide}
+                inactiveOpacity={0.5}
+                inactiveColor='#000'
             />
         );
     }
@@ -52,21 +54,51 @@ class UpcomingEvents extends React.Component {
 
     render() {
         return (
-            <Carousel
-                ref={(c) => { if (!this.state.slider1Ref) { this.setState({ slider1Ref: c }); } }}
-                data={this.props.data}
-                renderItem={this._renderItem}
-                sliderWidth={sliderWidth}
-                itemWidth={itemWidth}
-                hasParallaxImages={true}
-                slideStyle={{ backgroundColor: 'black' }}
-                firstItem={SLIDER_1_FIRST_ITEM}
-                inactiveSlideScale={0.94}
-                inactiveSlideOpacity={0.7}
-                inactiveSlideShift={4}
-                onSnapToItem={(index) => this.setState({ currentCard: index })}
-            />
+            <View style={{ flex: 1 }}>
+                <Carousel
+                    ref={(c) => { if (!this.state.slider1Ref) { this.setState({ slider1Ref: c }); } }}
+                    data={this.props.data}
+                    renderItem={this._renderItem}
+                    sliderWidth={sliderWidth}
+                    itemWidth={itemWidth}
+                    firstItem={SLIDER_1_FIRST_ITEM}
+                    inactiveSlideScale={0.85}
+                    inactiveSlideOpacity={0.7}
+                    slideStyle={{ backgroundColor: '#000' }}
+                    onSnapToItem={(index) => this.setState({ sliderActiveSlide: index })}
+                    contentContainerCustomStyle={styles.sliderContentContainer}
+                // containerCustomStyle={{ marginTop: 15 }}
+
+                />
+                <Pagination
+                    dotsLength={this.props.data.length}
+                    activeDotIndex={this.state.sliderActiveSlide}
+                    containerStyle={styles.paginationContainer}
+                    dotColor={'rgba(255, 255, 255, 0.92)'}
+                    dotStyle={styles.paginationDot}
+                    inactiveDotColor={'#000'}
+                    inactiveDotOpacity={0.4}
+                    inactiveDotScale={0.6}
+                    carouselRef={this.state.slider1Ref}
+                    tappableDots={!!this.state.slider1Ref}
+                />
+            </View>
         )
+    }
+}
+
+const styles = {
+    paginationContainer: {
+        paddingVertical: 8
+    },
+    paginationDot: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        marginHorizontal: 8
+    },
+    sliderContentContainer: {
+        paddingVertical: 15 // for custom animation
     }
 }
 

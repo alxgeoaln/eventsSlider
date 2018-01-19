@@ -43,20 +43,27 @@ class Events extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView>
+                <ScrollView >
                     <View style={styles.childContainer}>
-                    <Text style={{marginTop: 20, marginBottom: 20}}>UpcomingEvents</Text>
+                        <Text style={{ marginTop: 20 }}>UpcomingEvents</Text>
                         <UpcomingEvents
                             navigation={this.props.navigation}
                             data={DATA}
                         />
                     </View>
-                    {/* <View style={styles.childContainer}>
-                        <PastEvents
+                    <View style={styles.childContainer}>
+                        <Text style={{ marginTop: 20 }}>UpcomingEvents</Text>
+                        <UpcomingEvents
                             navigation={this.props.navigation}
                             data={DATA}
                         />
-                    </View> */}
+                    </View>
+                    <View style ={{alignSelf: 'center'}}>
+                        <Text style={{marginTop: 20}}>Past Events</Text>
+                        <PastEvents
+                            data={DATA}
+                        />
+                    </View>
                 </ScrollView>
             </View>
         )
@@ -72,7 +79,7 @@ const styles = {
         backgroundColor: '#637A91',
     },
     childContainer: {
-        height: 400
+        height: 450
     }
 };
 
