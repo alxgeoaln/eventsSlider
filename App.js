@@ -8,8 +8,8 @@ import AgendaScreen from './screens/AgendaScreen';
 export default class App extends React.Component {
   render() {
     const Navigation = StackNavigator({
-      home: { screen: Events },
       agenda: { screen: AgendaScreen},
+      home: { screen: Events },
       details: {
         screen: DetailsScreen,
       },
