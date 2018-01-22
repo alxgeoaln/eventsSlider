@@ -64,7 +64,7 @@ class UpcomingEvents extends React.Component {
                     firstItem={SLIDER_1_FIRST_ITEM}
                     inactiveSlideScale={0.85}
                     inactiveSlideOpacity={0.7}
-                    slideStyle={{ backgroundColor: '#000' }}
+                    // slideStyle={{ backgroundColor: '#000' }}
                     onSnapToItem={(index) => this.setState({ sliderActiveSlide: index })}
                     contentContainerCustomStyle={styles.sliderContentContainer}
                 // containerCustomStyle={{ marginTop: 15 }}

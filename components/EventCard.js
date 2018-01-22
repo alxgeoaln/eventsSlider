@@ -82,29 +82,24 @@ class EventCard extends React.Component {
 
         return (
             <View style={styles.slideInnerContainer}>
-                {/* <TouchableOpacity
-                    activeOpacity={1}
-                    
-                > */}
+                <View>
+                    <Image
+                        source={{ uri: 'https://cloud.netlifyusercontent.com/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg' }}
+                        style={[styles.image]}
 
-                    <View>
-                        <Animated.Image
-                            source={{ uri: 'https://cloud.netlifyusercontent.com/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg' }}
-                            style={[styles.image, this.inactiveImageStyle()]}
+                    />
+                </View>
+                <View
+                    style={[styles.textContainer]}
 
-                        />
-                    </View>
-                    <Animated.View
-                        style={[styles.textContainer, this.inactiveImageStyle()]}
-
+                >
+                    <Text
+                        style={[styles.subtitle]}
+                        numberOfLines={2}
                     >
-                        <Text
-                            style={[styles.subtitle]}
-                            numberOfLines={2}
-                        >
-                            {ev.title}
-                        </Text>
-                    </Animated.View>
+                        {ev.title}
+                    </Text>
+                </View>
                 {/* </TouchableOpacity> */}
                 {/* #endregion */}
             </View>
