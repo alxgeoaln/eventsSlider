@@ -11,7 +11,6 @@ class DaySlider extends Component {
     changeDate = async (index) => {
         await this.setState({ buttonIndex: index });
         const { buttonIndex } = this.state;
-        console.log(index, buttonIndex)
         styles.activeDate(index, buttonIndex);
     }
 
@@ -19,7 +18,7 @@ class DaySlider extends Component {
         return this.props.data.map((item, index) => {
             const dateItemString = item.date.toDateString();
             const formated = dateItemString.split(' ');
-            const {dateContainer, activeDate, activateDateText, textStyle} = styles;
+            const { dateContainer, activeDate, activateDateText, textStyle } = styles;
             return (
                 <TouchableOpacity onPress={() => this.changeDate(index)}>
                     <View style={[styles.dateContainer(this.props.data.length), styles.activeDate(index, this.state.buttonIndex)]}>

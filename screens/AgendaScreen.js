@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import DaySlider from '../components/DaySlider';
+import AgendaItem from '../components/AgendaItem';
 
 const DATA = [
     {
@@ -37,10 +38,11 @@ class AgendaScreen extends Component {
     render() {
 
         return (
-            <View style={{marginHorizontal: 10}}>
+            <View style={{ marginHorizontal: 10 }}>
                 <DaySlider
                     data={DATA}
                 />
+                <AgendaItem />
             </View>
 
         )
