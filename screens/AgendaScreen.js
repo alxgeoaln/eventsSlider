@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import DaySlider from '../components/DaySlider';
 import AgendaItem from '../components/AgendaItem';
+import RadialMenu from '../components/RadialMenu';
 
 const DATA = [
     {
@@ -42,7 +43,8 @@ class AgendaScreen extends Component {
                 <DaySlider
                     data={DATA}
                 />
-                <AgendaItem />
+                <RadialMenu/>
+                {/* <AgendaItem /> */}
             </View>
 
         )
